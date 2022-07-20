@@ -55,6 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  List<bool> drink = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -65,20 +79,32 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-          alignment: Alignment.center,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 300,
-                  height: 500,
-                  child: Lottie.asset(
-                    'assets/lottie/glass_water.json',
-                  ),
-                )
-              ]),
+        body: SafeArea(
+          child: SingleChildScrollView(
+              child: Container(
+                  padding: EdgeInsets.all(30),
+                  height: MediaQuery.of(context).size.height - 150,
+                  child: GridView.builder(
+                      itemCount: 12,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, //1 개의 행에 보여줄 item 개수
+                        mainAxisSpacing: 40,
+                      ),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            drink[index] = true;
+                            setState(() {});
+                          },
+                          child: Lottie.asset(
+                            animate: drink[index],
+                            repeat: false,
+                            width: 100,
+                            height: 150,
+                            'assets/lottie/glass_water.json',
+                          ),
+                        );
+                      }))),
         ),
       ),
     );
